@@ -1,27 +1,37 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { CalendarViewDropdown } from "./components/calendar-view-dropdown/CalendarViewDropdown";
+import { Calendar } from "./components/calendar/Calendar";
+import { CalendarViewTypes } from "./constants/CalendarViewTypes";
 
-class App extends Component {
-  render() {
+interface IAppState {
+  currentView: CalendarViewTypes;
+}
+
+class App extends Component<{}, IAppState> {
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      currentView: CalendarViewTypes.MONTH,
+    };
+    this.onViewChanged = this.onViewChanged.bind(this);
+  }
+
+  public render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <>
+        <CalendarViewDropdown
+          currentView={this.state.currentView}
+          onViewChanged={this.onViewChanged}
+        />
+        <Calendar viewType={this.state.currentView} />
+      </>
     );
+  }
+
+  private onViewChanged(newView: CalendarViewTypes) {
+    this.setState({
+      currentView: newView,
+    });
   }
 }
 
