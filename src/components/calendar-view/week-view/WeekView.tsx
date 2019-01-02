@@ -1,7 +1,8 @@
+import { MomentDateUnits } from "../../../constants/MomentDateUnits";
 import { AbstractView } from "../AbstractView";
 
 export class WeekView extends AbstractView {
-  public render() {
-    return "week view";
+  protected getDateUnits(): MomentDateUnits {
+    return MomentDateUnits.WEEK;
   }
 }

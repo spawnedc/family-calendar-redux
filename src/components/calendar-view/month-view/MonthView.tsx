@@ -1,7 +1,8 @@
+import { MomentDateUnits } from "../../../constants/MomentDateUnits";
 import { AbstractView } from "../AbstractView";
 
 export class MonthView extends AbstractView {
-  public render() {
-    return "month view";
+  protected getDateUnits(): MomentDateUnits {
+    return MomentDateUnits.MONTH;
   }
 }
