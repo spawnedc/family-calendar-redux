@@ -8,41 +8,43 @@ export interface IAbstractViewProps {
 
 interface IAbstractViewState {
   selectedDate: Moment;
-  startDate: Moment;
-  endDate: Moment;
 }
 
 export abstract class AbstractView extends Component<
   IAbstractViewProps,
   IAbstractViewState
 > {
+  protected abstract dateUnits: MomentDateUnits;
+
   constructor(props: IAbstractViewProps) {
     super(props);
-    const dateUnits: MomentDateUnits = this.getDateUnits();
 
     const selectedDate: Moment = this.props.selectedDate || utc(new Date());
-    const startDate: Moment = selectedDate.clone().startOf(dateUnits);
-    const endDate: Moment = selectedDate.clone().endOf(dateUnits);
 
     this.state = {
-      endDate,
       selectedDate,
-      startDate,
     };
   }
 
   public render() {
+    const { selectedDate } = this.state;
+    const startDate: Moment = this.getStartDate(selectedDate);
+    const endDate: Moment = this.getEndDate(selectedDate);
+
+    const numberOfWeeks = Math.round(
+      endDate.diff(startDate, MomentDateUnits.WEEK, true),
+    );
     return (
       <>
-        <p>{this.getDateUnits()}</p>
-        <p>{this.state.selectedDate.format("LLL")}</p>
-        <p>{this.state.startDate.format("LLL")}</p>
-        <p>{this.state.endDate.format("LLL")}</p>
+        <p>{this.dateUnits}</p>
+        <p>{selectedDate.format("LLL")}</p>
+        <p>{startDate.format("LLL")}</p>
+        <p>{endDate.format("LLL")}</p>
+        <p>{numberOfWeeks}</p>
       </>
     );
   }
 
-  protected getDateUnits(): MomentDateUnits {
-    return MomentDateUnits.DAY;
-  }
+  protected abstract getStartDate(selectedDate: Moment): Moment;
+  protected abstract getEndDate(selectedDate: Moment): Moment;
 }
