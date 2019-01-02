@@ -1,6 +1,6 @@
-import { Component } from "react";
+import { AbstractView } from "../AbstractView";
 
-export class MonthView extends Component {
+export class MonthView extends AbstractView {
   public render() {
     return "month view";
   }

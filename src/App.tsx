@@ -1,3 +1,4 @@
+import { Moment, utc } from "moment";
 import React, { Component } from "react";
 import { CalendarViewDropdown } from "./components/calendar-view-dropdown/CalendarViewDropdown";
 import { Calendar } from "./components/calendar/Calendar";
@@ -5,6 +6,7 @@ import { CalendarViewTypes } from "./constants/CalendarViewTypes";
 
 interface IAppState {
   currentView: CalendarViewTypes;
+  selectedDate: Moment;
 }
 
 class App extends Component<{}, IAppState> {
@@ -12,18 +14,21 @@ class App extends Component<{}, IAppState> {
     super(props);
     this.state = {
       currentView: CalendarViewTypes.MONTH,
+      selectedDate: utc(new Date()),
     };
     this.onViewChanged = this.onViewChanged.bind(this);
   }
 
   public render() {
+    const { currentView, selectedDate } = this.state;
+
     return (
       <>
         <CalendarViewDropdown
-          currentView={this.state.currentView}
+          currentView={currentView}
           onViewChanged={this.onViewChanged}
         />
-        <Calendar viewType={this.state.currentView} />
+        <Calendar viewType={currentView} selectedDate={selectedDate} />
       </>
     );
   }

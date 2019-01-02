@@ -1,6 +1,6 @@
-import { Component } from "react";
+import { AbstractView } from "../AbstractView";
 
-export class DayView extends Component {
+export class DayView extends AbstractView {
   public render() {
     return "day view";
   }
