@@ -1,21 +1,37 @@
 import { Moment } from "moment";
+import { DateRange } from "moment-range";
+import React from "react";
 import { MomentDateUnits } from "../../../constants/MomentDateUnits";
 import { AbstractView } from "../AbstractView";
+import { WeekView } from "../week-view/WeekView";
 
 export class MonthView extends AbstractView {
   protected dateUnits: MomentDateUnits = MomentDateUnits.MONTH;
 
-  protected getStartDate(selectedDate: Moment): Moment {
-    return selectedDate
+  public render() {
+    const range: DateRange = this.getRange();
+    const weeksInMonth: Moment[] = Array.from(range.by(MomentDateUnits.WEEK));
+
+    const weeks: JSX.Element[] = weeksInMonth.map((week: Moment) => (
+      <WeekView selectedDate={week} />
+    ));
+
+    return <div className="month">{weeks}</div>;
+  }
+
+  private getRange(): DateRange {
+    const { selectedDate } = this.state;
+
+    const startDate: Moment = selectedDate
       .clone()
       .startOf(this.dateUnits)
       .startOf(MomentDateUnits.WEEK);
-  }
 
-  protected getEndDate(selectedDate: Moment): Moment {
-    return selectedDate
+    const endDate: Moment = selectedDate
       .clone()
       .endOf(this.dateUnits)
       .endOf(MomentDateUnits.WEEK);
+
+    return new DateRange(startDate, endDate);
   }
 }

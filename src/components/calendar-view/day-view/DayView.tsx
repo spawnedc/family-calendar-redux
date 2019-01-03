@@ -1,15 +1,17 @@
-import { Moment } from "moment";
+import React from "react";
+import { DateFormats } from "../../../constants/DateFormats";
 import { MomentDateUnits } from "../../../constants/MomentDateUnits";
 import { AbstractView } from "../AbstractView";
 
 export class DayView extends AbstractView {
   protected dateUnits: MomentDateUnits = MomentDateUnits.DAY;
 
-  protected getStartDate(selectedDate: Moment): Moment {
-    return selectedDate.clone().startOf(this.dateUnits);
-  }
-
-  protected getEndDate(selectedDate: Moment): Moment {
-    return selectedDate.clone().endOf(this.dateUnits);
+  public render() {
+    const { selectedDate } = this.state;
+    return (
+      <div className="day" key={selectedDate.format(DateFormats.SHORT)}>
+        {selectedDate.format(DateFormats.DAY)}
+      </div>
+    );
   }
 }

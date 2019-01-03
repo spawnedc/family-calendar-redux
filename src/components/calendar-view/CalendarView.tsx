@@ -1,5 +1,5 @@
 import { Moment } from "moment";
-import React, { Component } from "react";
+import React from "react";
 import { CalendarViewTypes } from "../../constants/CalendarViewTypes";
 import { IAbstractViewProps } from "./AbstractView";
 import { DayView } from "./day-view/DayView";
@@ -11,7 +11,7 @@ interface ICalendarViewProps {
   selectedDate?: Moment;
 }
 
-export class CalendarView extends Component<ICalendarViewProps> {
+export class CalendarView extends React.Component<ICalendarViewProps> {
   public render() {
     const { selectedDate } = this.props;
     const viewProps: IAbstractViewProps = {
