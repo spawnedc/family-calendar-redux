@@ -2,7 +2,7 @@ import { locale as setMomentLocale } from "moment";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import "./index.css";
+import "./styles/index.css";
 
 const initialise = async () => {
   const locale = window.navigator.language.toLowerCase();

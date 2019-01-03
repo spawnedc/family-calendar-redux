@@ -2,6 +2,7 @@ import React from "react";
 import { DateFormats } from "../../../constants/DateFormats";
 import { MomentDateUnits } from "../../../constants/MomentDateUnits";
 import { AbstractView } from "../AbstractView";
+import "./day-view.css";
 
 export class DayView extends AbstractView {
   protected dateUnits: MomentDateUnits = MomentDateUnits.DAY;

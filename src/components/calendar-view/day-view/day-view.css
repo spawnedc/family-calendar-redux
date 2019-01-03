@@ -1,0 +1,8 @@
+.day {
+  border-right: 1px solid var(--borderColour);
+  padding: 10px;
+}
+
+.day:last-child {
+  border-right: 0;
+}

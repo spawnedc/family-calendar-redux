@@ -5,6 +5,7 @@ import { DateFormats } from "../../../constants/DateFormats";
 import { MomentDateUnits } from "../../../constants/MomentDateUnits";
 import { AbstractView } from "../AbstractView";
 import { DayView } from "../day-view/DayView";
+import "./week-view.css";
 
 export class WeekView extends AbstractView {
   protected dateUnits: MomentDateUnits = MomentDateUnits.WEEK;
@@ -14,7 +15,7 @@ export class WeekView extends AbstractView {
     const daysInWeek: Moment[] = Array.from(weekRange.by(MomentDateUnits.DAY));
 
     const days: JSX.Element[] = daysInWeek.map((day: Moment) => (
-      <DayView selectedDate={day} />
+      <DayView key={day.format(DateFormats.SHORT)} selectedDate={day} />
     ));
     return (
       <div
