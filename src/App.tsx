@@ -23,13 +23,13 @@ class App extends Component<{}, IAppState> {
     const { currentView, selectedDate } = this.state;
 
     return (
-      <>
+      <div className="app">
         <CalendarViewDropdown
           currentView={currentView}
           onViewChanged={this.onViewChanged}
         />
         <Calendar viewType={currentView} selectedDate={selectedDate} />
-      </>
+      </div>
     );
   }
 
