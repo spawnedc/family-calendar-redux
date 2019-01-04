@@ -6,7 +6,7 @@ import "./calendar.css";
 
 interface ICalendarProps {
   viewType: CalendarViewTypes;
-  selectedDate?: Moment;
+  selectedDate: Moment;
 }
 
 export class Calendar extends Component<ICalendarProps, {}> {

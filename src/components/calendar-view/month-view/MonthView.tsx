@@ -1,41 +1,46 @@
-import { Moment } from "moment";
+import { Moment, utc } from "moment";
 import { DateRange } from "moment-range";
 import React from "react";
 import { DateFormats } from "../../../constants/DateFormats";
 import { MomentDateUnits } from "../../../constants/MomentDateUnits";
-import { AbstractView } from "../AbstractView";
+import { IAbstractViewProps } from "../IAbstractViewProps";
 import { WeekView } from "../week-view/WeekView";
 import "./month-view.css";
 
-export class MonthView extends AbstractView {
-  protected dateUnits: MomentDateUnits = MomentDateUnits.MONTH;
+interface IMonthViewProps extends IAbstractViewProps {
+  month: number;
+}
 
+export class MonthView extends React.Component<IMonthViewProps> {
   public render() {
+    const { selectedDate } = this.props;
     const range: DateRange = this.getRange();
     const weeksInMonth: Moment[] = Array.from(range.by(MomentDateUnits.WEEK));
 
-    const weeks: JSX.Element[] = weeksInMonth.map((week: Moment) => (
-      <WeekView
-        key={week.format(DateFormats.WEEK_WITH_YEAR)}
-        selectedDate={week}
-      />
-    ));
+    const weeks: JSX.Element[] = weeksInMonth.map((week: Moment) => {
+      const year = week.year();
+      const weekInYear = week.isoWeek();
+
+      return (
+        <WeekView
+          key={week.format(DateFormats.WEEK_WITH_YEAR)}
+          selectedDate={selectedDate}
+          year={year}
+          weekInYear={weekInYear}
+        />
+      );
+    });
 
     return <div className="month">{weeks}</div>;
   }
 
   private getRange(): DateRange {
-    const { selectedDate } = this.state;
-
-    const startDate: Moment = selectedDate
-      .clone()
-      .startOf(this.dateUnits)
-      .startOf(MomentDateUnits.WEEK);
-
-    const endDate: Moment = selectedDate
-      .clone()
-      .endOf(this.dateUnits)
-      .endOf(MomentDateUnits.WEEK);
+    const { year, month } = this.props;
+    const startDate: Moment = utc()
+      .year(year)
+      .month(month)
+      .date(1);
+    const endDate: Moment = startDate.clone().endOf(MomentDateUnits.MONTH);
 
     return new DateRange(startDate, endDate);
   }

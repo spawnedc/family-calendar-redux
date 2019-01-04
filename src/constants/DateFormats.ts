@@ -1,5 +1,5 @@
 export enum DateFormats {
-  SHORT = "dd-mm-YYYY",
-  DAY = "DD",
+  SHORT = "DD-MM-YYYY",
+  DAY = "D",
   WEEK_WITH_YEAR = "ww-YYYY",
 }

@@ -1,36 +1,51 @@
-import { Moment } from "moment";
+import { Moment, utc } from "moment";
 import { DateRange } from "moment-range";
 import React from "react";
 import { DateFormats } from "../../../constants/DateFormats";
 import { MomentDateUnits } from "../../../constants/MomentDateUnits";
-import { AbstractView } from "../AbstractView";
 import { DayView } from "../day-view/DayView";
+import { IAbstractViewProps } from "../IAbstractViewProps";
 import "./week-view.css";
 
-export class WeekView extends AbstractView {
-  protected dateUnits: MomentDateUnits = MomentDateUnits.WEEK;
+interface IWeekViewProps extends IAbstractViewProps {
+  weekInYear: number;
+}
 
+export class WeekView extends React.Component<IWeekViewProps> {
   public render() {
     const weekRange: DateRange = this.getRange();
     const daysInWeek: Moment[] = Array.from(weekRange.by(MomentDateUnits.DAY));
+    const { selectedDate, year } = this.props;
+    const formattedSelectedDate = selectedDate.format(DateFormats.SHORT);
 
-    const days: JSX.Element[] = daysInWeek.map((day: Moment) => (
-      <DayView key={day.format(DateFormats.SHORT)} selectedDate={day} />
-    ));
-    return (
-      <div
-        className="week"
-        key={weekRange.start.format(DateFormats.WEEK_WITH_YEAR)}
-      >
-        {days}
-      </div>
-    );
+    const days: JSX.Element[] = daysInWeek.map((day: Moment) => {
+      const isSelected =
+        formattedSelectedDate === day.format(DateFormats.SHORT);
+      const isOutsideOfCurrentMonth = selectedDate.month() !== day.month();
+      const month = day.month();
+      const date = day.date();
+
+      return (
+        <DayView
+          key={day.format(DateFormats.SHORT)}
+          isOutsideOfCurrentMonth={isOutsideOfCurrentMonth}
+          isSelected={isSelected}
+          year={year}
+          month={month}
+          day={date}
+        />
+      );
+    });
+    return <div className="week">{days}</div>;
   }
 
   private getRange(): DateRange {
-    const { selectedDate } = this.state;
-    const startDate: Moment = selectedDate.clone().startOf(this.dateUnits);
-    const endDate: Moment = selectedDate.clone().endOf(this.dateUnits);
+    const { year, weekInYear } = this.props;
+    const startDate: Moment = utc()
+      .year(year)
+      .isoWeek(weekInYear)
+      .startOf(MomentDateUnits.WEEK);
+    const endDate: Moment = startDate.clone().endOf(MomentDateUnits.WEEK);
 
     return new DateRange(startDate, endDate);
   }
