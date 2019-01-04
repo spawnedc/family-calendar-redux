@@ -1,8 +1,10 @@
 import { Moment, utc } from "moment";
 import React, { Component } from "react";
-import { CalendarViewDropdown } from "./components/calendar-view-dropdown/CalendarViewDropdown";
-import { Calendar } from "./components/calendar/Calendar";
-import { CalendarViewTypes } from "./constants/CalendarViewTypes";
+import { Calendar } from "../components/calendar/Calendar";
+import { Header } from "../components/header/Header";
+import { Sidebar } from "../components/sidebar/Sidebar";
+import { CalendarViewTypes } from "../constants/CalendarViewTypes";
+import "./app.css";
 
 interface IAppState {
   currentView: CalendarViewTypes;
@@ -24,10 +26,12 @@ class App extends Component<{}, IAppState> {
 
     return (
       <div className="app">
-        <CalendarViewDropdown
+        <Header
           currentView={currentView}
+          selectedDate={selectedDate}
           onViewChanged={this.onViewChanged}
         />
+        <Sidebar currentView={currentView} selectedDate={selectedDate} />
         <Calendar viewType={currentView} selectedDate={selectedDate} />
       </div>
     );

@@ -24,21 +24,27 @@ export class CalendarViewDropdown extends Component<
   }
 
   public render() {
-    const options: JSX.Element[] = [];
-    Object.keys(CalendarViewTypes).forEach((key: any) => {
-      const value = CalendarViewTypes[key];
+    const options: JSX.Element[] = Object.keys(CalendarViewTypes).map(
+      (key: any) => {
+        const value = CalendarViewTypes[key];
 
-      options.push(
-        <option key={key} value={value}>
-          {value}
-        </option>,
-      );
-    });
+        return (
+          <option key={key} value={value}>
+            {value}
+          </option>
+        );
+      },
+    );
 
     return (
-      <select onChange={this.valueChangeHandler} value={this.state.currentView}>
-        {options}
-      </select>
+      <div className="calendar-view-dropdown">
+        <select
+          onChange={this.valueChangeHandler}
+          value={this.state.currentView}
+        >
+          {options}
+        </select>
+      </div>
     );
   }
 

@@ -1,7 +1,7 @@
 import { locale as setMomentLocale } from "moment";
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "./app/App";
 import "./styles/index.css";
 
 const initialise = async () => {

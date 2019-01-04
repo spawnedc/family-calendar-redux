@@ -1,5 +1,5 @@
 .month {
-  border-top: 1px solid var(--borderColour);
   display: grid;
-  grid-template-rows: repeat(var(--numberOfCalendarRows), auto);
+  grid-auto-rows: auto;
+  height: 100%;
 }
