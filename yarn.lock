@@ -901,6 +901,30 @@
     "@svgr/core" "^2.4.1"
     loader-utils "^1.1.0"
 
+"@types/gapi.auth2@^0.0.48":
+  version "0.0.48"
+  resolved "https://registry.yarnpkg.com/@types/gapi.auth2/-/gapi.auth2-0.0.48.tgz#bef480ecf6dce133ec2613107f966880b3cb1935"
+  integrity sha512-YCrefPvJOQRoQzLKkL4lIdDakYmHvH3gtI0hjpOPz1G48aUYiDNqxooSmsdmNjMPoCvxBGlM2vYsjCHT8IsZSQ==
+  dependencies:
+    "@types/gapi" "*"
+
+"@types/gapi.client.calendar@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/gapi.client.calendar/-/gapi.client.calendar-3.0.0.tgz#ebcde8788a02aad000eb8484361501eaf174ac6a"
+  integrity sha512-Icj/ofQVgX0nYFLWS7oYsQeKcKDUIv1wcyaT8yyVrr0TZp6bgu2rukA/OhP/9dAF3u0WqcKmoVHMeycTMag0jw==
+  dependencies:
+    "@types/gapi.client" "*"
+
+"@types/gapi.client@*", "@types/gapi.client@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/gapi.client/-/gapi.client-1.0.0.tgz#aa42501465fcf6440421050da70ec724d4c4c4df"
+  integrity sha512-8Qau2uDdic2IjLyz10LDZ+nKIjD/f7AjOA3xgGIHLqQ6NM6Z7kfV7HOehJUExy9TlrEwkzEN+Hqct+B8Y4AugQ==
+
+"@types/gapi@*", "@types/gapi@^0.0.36":
+  version "0.0.36"
+  resolved "https://registry.yarnpkg.com/@types/gapi/-/gapi-0.0.36.tgz#e7fb3d4d4a6fbdbd0a9aef1cbd93d3b115d59a3d"
+  integrity sha512-biMDn3eNRoPEMaPTEn5DwKXu64ng3U3cDQkePOllZ7uTRcA9lpPqwcLrDPF1cP0v+CrAtyv8w95/eVDSsQYPYQ==
+
 "@types/jest@23.3.10":
   version "23.3.10"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.10.tgz#4897974cc317bf99d4fe6af1efa15957fa9c94de"

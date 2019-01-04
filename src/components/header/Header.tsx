@@ -7,7 +7,7 @@ import "./header.css";
 interface IHeaderProps {
   currentView: CalendarViewTypes;
   selectedDate: Moment;
-  onViewChanged: (newView: CalendarViewTypes) => void;
+  viewChangeHandler: (newView: CalendarViewTypes) => void;
 }
 
 interface IHeaderState {
@@ -27,13 +27,13 @@ export class Header extends Component<IHeaderProps, IHeaderState> {
   }
 
   public render() {
-    const { onViewChanged } = this.props;
+    const { viewChangeHandler } = this.props;
     const { currentView } = this.state;
     return (
       <div className="header">
         <CalendarViewDropdown
           currentView={currentView}
-          onViewChanged={onViewChanged}
+          viewChangeHandler={viewChangeHandler}
         />
       </div>
     );

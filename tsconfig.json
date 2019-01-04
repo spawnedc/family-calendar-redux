@@ -12,7 +12,8 @@
     "resolveJsonModule": true,
     "noEmit": true,
     "jsx": "preserve",
-    "isolatedModules": true
+    "isolatedModules": true,
+    "types": ["gapi", "gapi.auth2", "gapi.client", "gapi.client.calendar"]
   },
   "include": [
     "src"

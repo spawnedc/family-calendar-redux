@@ -2,7 +2,7 @@ import React, { ChangeEvent, Component } from "react";
 import { CalendarViewTypes } from "../../constants/CalendarViewTypes";
 
 interface ICalendarViewDropdownProps {
-  onViewChanged: (newView: CalendarViewTypes) => void;
+  viewChangeHandler: (newView: CalendarViewTypes) => void;
   currentView: CalendarViewTypes;
 }
 
@@ -55,6 +55,6 @@ export class CalendarViewDropdown extends Component<
       currentView: newView,
     });
 
-    this.props.onViewChanged(newView);
+    this.props.viewChangeHandler(newView);
   }
 }
