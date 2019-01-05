@@ -1,11 +1,9 @@
 import { Moment, utc } from "moment";
 import React, { Component } from "react";
-import { CalendarEvent } from "../classes/CalendarEvent";
 import { Calendar } from "../components/calendar/Calendar";
 import { Header } from "../components/header/Header";
 import { Sidebar } from "../components/sidebar/Sidebar";
 import { CalendarViewTypes } from "../constants/CalendarViewTypes";
-import { MomentDateUnits } from "../constants/MomentDateUnits";
 import { GApiService } from "../services/GApiService";
 import "./app.css";
 
@@ -13,7 +11,6 @@ interface IAppState {
   currentView: CalendarViewTypes;
   selectedDate: Moment;
   signedIn: boolean;
-  events: CalendarEvent[];
 }
 
 class App extends Component<{}, IAppState> {
@@ -21,7 +18,6 @@ class App extends Component<{}, IAppState> {
     super(props);
     this.state = {
       currentView: CalendarViewTypes.MONTH,
-      events: [],
       selectedDate: utc(new Date()),
       signedIn: false,
     };
@@ -31,9 +27,7 @@ class App extends Component<{}, IAppState> {
   }
 
   public render() {
-    const { currentView, selectedDate, signedIn, events } = this.state;
-
-    console.warn(events);
+    const { currentView, selectedDate, signedIn } = this.state;
 
     if (!signedIn) {
       return "Signing in...";
@@ -54,21 +48,6 @@ class App extends Component<{}, IAppState> {
 
   private signInHandler(): void {
     this.setState({ signedIn: true });
-    const { selectedDate } = this.state;
-    const startDate: string = selectedDate
-      .clone()
-      .startOf(MomentDateUnits.MONTH)
-      .toISOString();
-    const endDate: string = selectedDate
-      .clone()
-      .endOf(MomentDateUnits.MONTH)
-      .toISOString();
-
-    GApiService.listUpcomingEvents(startDate, endDate).then(
-      (events: CalendarEvent[]) => {
-        this.setState({ events });
-      },
-    );
   }
 
   private viewChangeHandler(newView: CalendarViewTypes) {

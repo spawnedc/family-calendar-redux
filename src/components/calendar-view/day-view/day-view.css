@@ -1,6 +1,5 @@
 .day {
   border-left: 1px solid var(--borderColour);
-  padding: 10px;
 }
 
 .day:last-child {
@@ -13,6 +12,7 @@
   display: flex;
   height: 20px;
   justify-content: center;
+  margin: 4px;
   width: 20px;
 }
 
@@ -23,4 +23,16 @@
 .day.is-selected .label {
   background-color: var(--materialBlue);
   color: white;
+}
+
+.day .event {
+  background-color: #b3e0db;
+  border-radius: 4px;
+  color: #202124;
+  font-size: 12px;
+  margin-right: 8px;
+  overflow: hidden;
+  padding: 2px 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

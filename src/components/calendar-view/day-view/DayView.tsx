@@ -1,6 +1,8 @@
 import { Moment, utc } from "moment";
 import React from "react";
+import { CalendarEvent } from "../../../classes/CalendarEvent";
 import { DateFormats } from "../../../constants/DateFormats";
+import { EventsService } from "../../../services/EventsService";
 import "./day-view.css";
 
 interface IDayViewProps {
@@ -12,20 +14,54 @@ interface IDayViewProps {
   isOutsideOfCurrentMonth?: boolean;
 }
 
-export class DayView extends React.Component<IDayViewProps> {
+interface IDayViewState {
+  events: CalendarEvent[];
+}
+
+export class DayView extends React.Component<IDayViewProps, IDayViewState> {
+  constructor(props: IDayViewProps) {
+    super(props);
+    this.state = {
+      events: [],
+    };
+  }
+
+  public componentDidMount() {
+    this.getEvents();
+  }
+
   public render() {
-    const { day, month, year } = this.props;
     const className: string = this.getClassName();
-    const dateToDisplay: Moment = utc()
-      .year(year)
-      .month(month)
-      .date(day);
+    const dateToDisplay: Moment = this.getDateToDisplay();
+    const { events } = this.state;
+    const eventsToRender = events.map((event) => (
+      <div className="event" key={event.id}>
+        {event.title}
+      </div>
+    ));
 
     return (
       <div className={className} key={dateToDisplay.format(DateFormats.SHORT)}>
-        <span className="label">{dateToDisplay.format(DateFormats.DAY)}</span>
+        <div className="label">{dateToDisplay.format(DateFormats.DAY)}</div>
+        <div className="events">{eventsToRender}</div>
       </div>
     );
+  }
+
+  private async getEvents(): Promise<void> {
+    const events: CalendarEvent[] = await EventsService.getDayEvents(
+      this.getDateToDisplay(),
+    );
+
+    this.setState({ events });
+  }
+
+  private getDateToDisplay(): Moment {
+    const { day, month, year } = this.props;
+    return utc()
+      .year(year)
+      .month(month)
+      .date(day);
   }
 
   private getClassName(): string {

@@ -1,5 +1,6 @@
 .month {
+  --numberOfRows: 5; /* A sensible default */
   display: grid;
-  grid-auto-rows: auto;
+  grid-template-rows: repeat(var(--numberOfRows), calc(100% / var(--numberOfRows)));
   height: 100%;
 }

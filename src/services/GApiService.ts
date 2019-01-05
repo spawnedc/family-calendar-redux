@@ -21,7 +21,7 @@ export class GApiService {
       gapi.client.calendar.Events
     > = await GApiService.gapi.client.calendar.events.list({
       calendarId: "#contacts@group.v.calendar.google.com",
-      maxResults: 10,
+      maxResults: 50,
       orderBy: "startTime",
       showDeleted: false,
       singleEvents: true,

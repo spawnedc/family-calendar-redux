@@ -31,7 +31,16 @@ export class MonthView extends React.Component<IMonthViewProps> {
       );
     });
 
-    return <div className="month">{weeks}</div>;
+    const numberOfWeeks = weeks.length;
+    const style: React.CSSProperties = {
+      ["--numberOfRows" as any]: numberOfWeeks,
+    };
+
+    return (
+      <div className="month" style={style}>
+        {weeks}
+      </div>
+    );
   }
 
   private getRange(): DateRange {
