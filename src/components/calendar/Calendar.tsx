@@ -11,10 +11,41 @@ interface ICalendarProps {
   selectedDate: Moment;
 }
 
-export class Calendar extends Component<ICalendarProps, {}> {
+export class Calendar extends Component<ICalendarProps> {
+  private weekdays: string[];
+
+  constructor(props: ICalendarProps) {
+    super(props);
+    this.weekdays = this.getDayNames();
+  }
+
   public render() {
+    const { currentView } = this.props;
     const viewToRender: JSX.Element = this.getViewToRender();
-    return <div className="calendar">{viewToRender}</div>;
+    const weekdays: JSX.Element[] = this.weekdays.map((weekday: string) => (
+      <div className="day" key={weekday}>
+        {weekday}
+      </div>
+    ));
+    return (
+      <div className="calendar">
+        {currentView !== CalendarViewTypes.DAY && (
+          <div className="weekdays">{weekdays}</div>
+        )}
+        {viewToRender}
+      </div>
+    );
+  }
+
+  private getDayNames(): string[] {
+    const { selectedDate } = this.props;
+    const weekdays = [];
+    for (let i = 0; i < 7; i++) {
+      const weekday = selectedDate.weekday(i).format("dddd");
+      weekdays.push(weekday);
+    }
+
+    return weekdays;
   }
 
   private getViewToRender(): JSX.Element {

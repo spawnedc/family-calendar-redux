@@ -1,9 +1,5 @@
 .week {
-  border-top: 1px solid var(--borderColour);
   display: grid;
   grid-template-columns: repeat(7, calc(100% / 7));
-}
-
-.week:first-child {
-  border-top: 0;
+  height: 100%;
 }
