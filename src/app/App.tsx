@@ -23,6 +23,7 @@ class App extends Component<{}, IAppState> {
     };
     this.signInHandler = this.signInHandler.bind(this);
     this.viewChangeHandler = this.viewChangeHandler.bind(this);
+    this.dateChangeHandler = this.dateChangeHandler.bind(this);
     GApiService.initialise(this.signInHandler);
   }
 
@@ -39,6 +40,7 @@ class App extends Component<{}, IAppState> {
           currentView={currentView}
           selectedDate={selectedDate}
           viewChangeHandler={this.viewChangeHandler}
+          dateChangeHandler={this.dateChangeHandler}
         />
         <Sidebar currentView={currentView} selectedDate={selectedDate} />
         <Calendar currentView={currentView} selectedDate={selectedDate} />
@@ -50,9 +52,15 @@ class App extends Component<{}, IAppState> {
     this.setState({ signedIn: true });
   }
 
-  private viewChangeHandler(newView: CalendarViewTypes) {
+  private viewChangeHandler(newView: CalendarViewTypes): void {
     this.setState({
       currentView: newView,
+    });
+  }
+
+  private dateChangeHandler(newDate: Moment): void {
+    this.setState({
+      selectedDate: newDate,
     });
   }
 }

@@ -2,6 +2,7 @@ import { Moment, utc } from "moment";
 import React from "react";
 import { CalendarEvent } from "../../../classes/CalendarEvent";
 import { DateFormats } from "../../../constants/DateFormats";
+import { MomentDateUnits } from "../../../constants/MomentDateUnits";
 import { EventsService } from "../../../services/EventsService";
 import "./day-view.css";
 
@@ -9,8 +10,6 @@ interface IDayViewProps {
   year: number;
   month: number;
   day: number;
-  isToday?: boolean;
-  isSelected?: boolean;
   isOutsideOfCurrentMonth?: boolean;
 }
 
@@ -31,8 +30,8 @@ export class DayView extends React.Component<IDayViewProps, IDayViewState> {
   }
 
   public render() {
-    const className: string = this.getClassName();
     const dateToDisplay: Moment = this.getDateToDisplay();
+    const className: string = this.getClassName(dateToDisplay);
     const { events } = this.state;
     const eventsToRender = events.map((event) => (
       <div className="event" key={event.id}>
@@ -64,16 +63,13 @@ export class DayView extends React.Component<IDayViewProps, IDayViewState> {
       .date(day);
   }
 
-  private getClassName(): string {
+  private getClassName(dateToDisplay: Moment): string {
     const classNames = ["day"];
-    const { isToday, isSelected, isOutsideOfCurrentMonth } = this.props;
+    const { isOutsideOfCurrentMonth } = this.props;
+    const isToday = dateToDisplay.isSame(utc(), MomentDateUnits.DATE);
 
     if (isToday) {
       classNames.push("is-today");
-    }
-
-    if (isSelected) {
-      classNames.push("is-selected");
     }
 
     if (isOutsideOfCurrentMonth) {

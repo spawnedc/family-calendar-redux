@@ -20,8 +20,6 @@ export class WeekView extends React.Component<IWeekViewProps> {
     const formattedSelectedDate = selectedDate.format(DateFormats.SHORT);
 
     const days: JSX.Element[] = daysInWeek.map((day: Moment) => {
-      const isSelected =
-        formattedSelectedDate === day.format(DateFormats.SHORT);
       const isOutsideOfCurrentMonth = selectedDate.month() !== day.month();
       const month = day.month();
       const date = day.date();
@@ -30,7 +28,6 @@ export class WeekView extends React.Component<IWeekViewProps> {
         <DayView
           key={day.format(DateFormats.SHORT)}
           isOutsideOfCurrentMonth={isOutsideOfCurrentMonth}
-          isSelected={isSelected}
           year={year}
           month={month}
           day={date}

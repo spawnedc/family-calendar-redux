@@ -20,7 +20,7 @@
   opacity: 0.2;
 }
 
-.day.is-selected .label {
+.day.is-today .label {
   background-color: var(--materialBlue);
   color: white;
 }
