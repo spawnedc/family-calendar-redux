@@ -1,7 +1,7 @@
 import { Moment } from "moment";
 import React, { Component } from "react";
 import { CalendarViewTypes } from "../../constants/CalendarViewTypes";
-import { CalendarViewDropdown } from "../calendar-view-dropdown/CalendarViewDropdown";
+import { CalendarViewDropdown } from "./calendar-view-dropdown/CalendarViewDropdown";
 import { DateSwitcher } from "./date-switcher/DateSwitcher";
 import "./header.css";
 

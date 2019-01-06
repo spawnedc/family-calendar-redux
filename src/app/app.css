@@ -1,7 +1,7 @@
 .app {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: 50px repeat(4, 1fr);
+  grid-template-columns: repeat(5, 20%);
+  grid-template-rows: 50px repeat(4, calc((100% - 50px) / 4));
   grid-template-areas:
     'header  header   header   header   header'
     'sidebar calendar calendar calendar calendar'

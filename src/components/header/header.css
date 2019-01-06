@@ -1,4 +1,8 @@
 .header {
+  align-items: center;
   border-bottom: 1px solid var(--borderColour);
+  display: grid;
   grid-area: header;
+  grid-template-columns: repeat(5, 20%);
+  grid-template-areas: 'header-icon header-date-switcher header-date-switcher header-view-dropdown header-user-info';
 }

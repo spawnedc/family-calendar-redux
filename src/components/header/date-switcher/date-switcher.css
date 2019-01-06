@@ -1,0 +1,15 @@
+.date-switcher {
+  align-items: center;
+  display: flex;
+  grid-area: header-date-switcher;
+}
+
+.date-switcher .previous-date,
+.date-switcher .next-date {
+  cursor: pointer;
+  height: 20px;
+  line-height: 20px;
+  margin: 4px;
+  text-align: center;
+  width: 20px;
+}

@@ -1,5 +1,6 @@
 import React, { ChangeEvent, Component } from "react";
-import { CalendarViewTypes } from "../../constants/CalendarViewTypes";
+import { CalendarViewTypes } from "../../../constants/CalendarViewTypes";
+import "./calendar-view-dropdown.css";
 
 interface ICalendarViewDropdownProps {
   viewChangeHandler: (newView: CalendarViewTypes) => void;

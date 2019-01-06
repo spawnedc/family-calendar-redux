@@ -75,7 +75,7 @@ export class DayView extends React.Component<IDayViewProps, IDayViewState> {
   private getClassName(dateToDisplay: Moment): string {
     const classNames = ["day"];
     const { isOutsideOfCurrentMonth } = this.props;
-    const isToday = dateToDisplay.isSame(utc(), MomentDateUnits.DATE);
+    const isToday = dateToDisplay.isSame(utc(), MomentDateUnits.DAY);
 
     if (isToday) {
       classNames.push("is-today");
