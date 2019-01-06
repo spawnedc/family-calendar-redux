@@ -50,7 +50,10 @@ export class MonthView extends React.Component<IMonthViewProps> {
       .year(year)
       .month(month)
       .date(1);
-    const endDate: Moment = startDate.clone().endOf(MomentDateUnits.MONTH);
+    const endDate: Moment = startDate
+      .clone()
+      .endOf(MomentDateUnits.MONTH)
+      .endOf(MomentDateUnits.WEEK);
 
     return new DateRange(startDate, endDate);
   }
