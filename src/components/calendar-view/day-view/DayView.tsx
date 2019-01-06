@@ -18,6 +18,8 @@ interface IDayViewState {
 }
 
 export class DayView extends React.Component<IDayViewProps, IDayViewState> {
+  private unmounted: boolean = false;
+
   constructor(props: IDayViewProps) {
     super(props);
     this.state = {
@@ -27,6 +29,10 @@ export class DayView extends React.Component<IDayViewProps, IDayViewState> {
 
   public componentDidMount() {
     this.getEvents();
+  }
+
+  public componentWillUnmount() {
+    this.unmounted = true;
   }
 
   public render() {
@@ -52,7 +58,10 @@ export class DayView extends React.Component<IDayViewProps, IDayViewState> {
       this.getDateToDisplay(),
     );
 
-    this.setState({ events });
+    // This is to prevent memory leaks when a day view is unmounted
+    if (!this.unmounted) {
+      this.setState({ events });
+    }
   }
 
   private getDateToDisplay(): Moment {
