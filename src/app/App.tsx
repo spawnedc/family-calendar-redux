@@ -11,6 +11,7 @@ interface IAppState {
   currentView: CalendarViewTypes;
   selectedDate: Moment;
   signedIn: boolean;
+  userProfile: gapi.auth2.BasicProfile | null;
 }
 
 class App extends Component<{}, IAppState> {
@@ -20,15 +21,17 @@ class App extends Component<{}, IAppState> {
       currentView: CalendarViewTypes.MONTH,
       selectedDate: utc(new Date()),
       signedIn: false,
+      userProfile: null,
     };
     this.signInHandler = this.signInHandler.bind(this);
+    this.signOutHandler = this.signOutHandler.bind(this);
     this.viewChangeHandler = this.viewChangeHandler.bind(this);
     this.dateChangeHandler = this.dateChangeHandler.bind(this);
-    GApiService.initialise(this.signInHandler);
+    GApiService.initialise(this.signInHandler, this.signOutHandler);
   }
 
   public render() {
-    const { currentView, selectedDate, signedIn } = this.state;
+    const { currentView, selectedDate, signedIn, userProfile } = this.state;
 
     if (!signedIn) {
       return "Signing in...";
@@ -41,6 +44,7 @@ class App extends Component<{}, IAppState> {
           selectedDate={selectedDate}
           viewChangeHandler={this.viewChangeHandler}
           dateChangeHandler={this.dateChangeHandler}
+          userProfile={userProfile}
         />
         <Sidebar currentView={currentView} selectedDate={selectedDate} />
         <Calendar currentView={currentView} selectedDate={selectedDate} />
@@ -48,8 +52,18 @@ class App extends Component<{}, IAppState> {
     );
   }
 
-  private signInHandler(): void {
-    this.setState({ signedIn: true });
+  private signInHandler(profile: gapi.auth2.BasicProfile): void {
+    this.setState({
+      signedIn: true,
+      userProfile: profile,
+    });
+  }
+
+  private signOutHandler(): void {
+    this.setState({
+      signedIn: false,
+      userProfile: null,
+    });
   }
 
   private viewChangeHandler(newView: CalendarViewTypes): void {

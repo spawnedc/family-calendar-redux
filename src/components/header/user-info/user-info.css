@@ -1,0 +1,12 @@
+.user-info {
+  align-items: center;
+  display: flex;
+  grid-area: header-user-info;
+  justify-content: space-between;
+}
+
+.user-info .user-image {
+  border-radius: 50%;
+  height: 36px;
+  margin-right: 8px;
+}

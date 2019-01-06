@@ -6,8 +6,12 @@ import {
 } from "../client_id.json";
 
 export class GApiService {
-  public static initialise(signInHandler: () => void) {
+  public static initialise(
+    signInHandler: (profile: gapi.auth2.BasicProfile) => void,
+    signOutHandler: () => void,
+  ) {
     GApiService.signInHandler = signInHandler;
+    GApiService.signOutHandler = signOutHandler;
     GApiService.gapi.load("client:auth2", () => GApiService.gapiLoadHandler());
   }
 
@@ -34,15 +38,23 @@ export class GApiService {
     return events.map(CalendarEvent.fromGapiEvent);
   }
 
-  private static signInHandler: () => void;
+  public static async signOut() {
+    await GApiService.gapi.auth2.getAuthInstance().signOut();
+    GApiService.signOutHandler();
+  }
+
+  private static signInHandler: (profile: gapi.auth2.BasicProfile) => void;
+  private static signOutHandler: () => void;
 
   private static gapi: any = gapi;
 
   private static updateSigninStatus(isSignedIn: boolean): void {
     if (isSignedIn) {
-      GApiService.signInHandler();
-    } else {
-      GApiService.gapi.auth2.getAuthInstance().signIn();
+      const profile: gapi.auth2.BasicProfile = GApiService.gapi.auth2
+        .getAuthInstance()
+        .currentUser.get()
+        .getBasicProfile();
+      GApiService.signInHandler(profile);
     }
   }
 
@@ -67,10 +79,16 @@ export class GApiService {
           GApiService.updateSigninStatus(isSignedIn),
         );
 
-      // Handle the initial sign-in state.
-      GApiService.updateSigninStatus(
-        GApiService.gapi.auth2.getAuthInstance().isSignedIn.get(),
-      );
+      const alreadySignedIn: boolean = GApiService.gapi.auth2
+        .getAuthInstance()
+        .isSignedIn.get();
+
+      if (alreadySignedIn) {
+        // Handle the initial sign-in state.
+        GApiService.updateSigninStatus(alreadySignedIn);
+      } else {
+        GApiService.gapi.auth2.getAuthInstance().signIn();
+      }
     } catch (error) {
       throw new Error(JSON.stringify(error));
     }
