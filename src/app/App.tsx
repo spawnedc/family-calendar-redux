@@ -41,7 +41,7 @@ class App extends Component<{}, IAppState> {
           viewChangeHandler={this.viewChangeHandler}
         />
         <Sidebar currentView={currentView} selectedDate={selectedDate} />
-        <Calendar viewType={currentView} selectedDate={selectedDate} />
+        <Calendar currentView={currentView} selectedDate={selectedDate} />
       </div>
     );
   }

@@ -3,11 +3,12 @@ import { DateRange } from "moment-range";
 import React from "react";
 import { DateFormats } from "../../../constants/DateFormats";
 import { MomentDateUnits } from "../../../constants/MomentDateUnits";
-import { IAbstractViewProps } from "../IAbstractViewProps";
 import { WeekView } from "../week-view/WeekView";
 import "./month-view.css";
 
-interface IMonthViewProps extends IAbstractViewProps {
+interface IMonthViewProps {
+  selectedDate: Moment;
+  year: number;
   month: number;
 }
 

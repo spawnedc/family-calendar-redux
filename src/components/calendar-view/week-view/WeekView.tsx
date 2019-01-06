@@ -4,10 +4,11 @@ import React from "react";
 import { DateFormats } from "../../../constants/DateFormats";
 import { MomentDateUnits } from "../../../constants/MomentDateUnits";
 import { DayView } from "../day-view/DayView";
-import { IAbstractViewProps } from "../IAbstractViewProps";
 import "./week-view.css";
 
-interface IWeekViewProps extends IAbstractViewProps {
+interface IWeekViewProps {
+  selectedDate: Moment;
+  year: number;
   weekInYear: number;
 }
 
