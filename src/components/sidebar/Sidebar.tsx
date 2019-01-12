@@ -1,6 +1,7 @@
 import { Moment } from "moment";
 import React, { Component } from "react";
 import { CalendarViewTypes } from "../../constants/CalendarViewTypes";
+import EventList from "../../containers/event-list";
 import "./sidebar.css";
 
 interface ISidebarProps {
@@ -24,6 +25,10 @@ export class Sidebar extends Component<ISidebarProps, ISidebarState> {
   }
 
   public render() {
-    return <div className="sidebar">Such empty...</div>;
+    return (
+      <div className="sidebar">
+        <EventList />
+      </div>
+    );
   }
 }

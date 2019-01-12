@@ -19,9 +19,7 @@ export class EventsService {
     );
   }
 
-  private static events: IEventsCache = {};
-
-  private static async getAllEventsForMonth(
+  public static async getAllEventsForMonth(
     selectedDate: Moment,
   ): Promise<CalendarEvent[]> {
     const monthKey: string = selectedDate.format(DateFormats.MONTH_WITH_YEAR);
@@ -45,4 +43,6 @@ export class EventsService {
 
     return EventsService.events[monthKey];
   }
+
+  private static events: IEventsCache = {};
 }
