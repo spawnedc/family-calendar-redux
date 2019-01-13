@@ -6,7 +6,7 @@ import { applyMiddleware, createStore } from "redux";
 import logger from "redux-logger";
 import promise from "redux-promise";
 import thunk from "redux-thunk";
-import App from "./app/App";
+import App from "./containers/app/App";
 import { allReducers } from "./reducers";
 import "./styles/index.css";
 

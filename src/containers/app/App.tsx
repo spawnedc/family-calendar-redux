@@ -1,41 +1,41 @@
 import { Moment, utc } from "moment";
 import React, { Component } from "react";
-import { Calendar } from "../components/calendar/Calendar";
-import { Header } from "../components/header/Header";
-import { Sidebar } from "../components/sidebar/Sidebar";
-import { CalendarViewTypes } from "../constants/CalendarViewTypes";
-import { GApiService } from "../services/GApiService";
+import { connect } from "react-redux";
+import { Calendar } from "../../components/calendar/Calendar";
+import { Header } from "../../components/header/Header";
+import { Sidebar } from "../../components/sidebar/Sidebar";
+import { CalendarViewTypes } from "../../constants/CalendarViewTypes";
+import GapiLoader from "../gapi-loader";
 import "./app.css";
+
+interface IAppProps {
+  currentUser: gapi.auth2.GoogleUser;
+}
 
 interface IAppState {
   currentView: CalendarViewTypes;
   selectedDate: Moment;
-  signedIn: boolean;
-  userProfile: gapi.auth2.BasicProfile | null;
 }
 
-class App extends Component<{}, IAppState> {
-  constructor(props: {}) {
+class App extends Component<IAppProps, IAppState> {
+  constructor(props: IAppProps) {
     super(props);
     this.state = {
       currentView: CalendarViewTypes.MONTH,
       selectedDate: utc(new Date()),
-      signedIn: false,
-      userProfile: null,
     };
-    this.signInHandler = this.signInHandler.bind(this);
-    this.signOutHandler = this.signOutHandler.bind(this);
     this.viewChangeHandler = this.viewChangeHandler.bind(this);
     this.dateChangeHandler = this.dateChangeHandler.bind(this);
-    GApiService.initialise(this.signInHandler, this.signOutHandler);
   }
 
   public render() {
-    const { currentView, selectedDate, signedIn, userProfile } = this.state;
+    const { currentView, selectedDate } = this.state;
 
-    if (!signedIn) {
-      return "Signing in...";
+    if (!this.props.currentUser) {
+      return <GapiLoader />;
     }
+
+    const userProfile: gapi.auth2.BasicProfile = this.props.currentUser.getBasicProfile();
 
     return (
       <div className="app">
@@ -52,20 +52,6 @@ class App extends Component<{}, IAppState> {
     );
   }
 
-  private signInHandler(profile: gapi.auth2.BasicProfile): void {
-    this.setState({
-      signedIn: true,
-      userProfile: profile,
-    });
-  }
-
-  private signOutHandler(): void {
-    this.setState({
-      signedIn: false,
-      userProfile: null,
-    });
-  }
-
   private viewChangeHandler(newView: CalendarViewTypes): void {
     this.setState({
       currentView: newView,
@@ -79,4 +65,6 @@ class App extends Component<{}, IAppState> {
   }
 }
 
-export default App;
+const mapStateToProps = (state: any) => ({ currentUser: state.currentUser });
+
+export default connect(mapStateToProps)(App);
